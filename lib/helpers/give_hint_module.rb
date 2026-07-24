@@ -1,0 +1,48 @@
+# frozen_string_literal: true
+
+# Module helper for handling the give hints
+module GiveHint
+  def exact_values(player_guess, computer_creation, filter_array_h)
+    color_pegs = 0
+    player_guess.each_with_index do |v, i|
+      computer_creation.each_with_index do |x, y|
+        next unless v == x && i == y
+
+        break if both_qualified(player_guess, computer_creation, filter_array_h) == false
+
+        color_pegs += 1
+        filter_array_h.push([i, y])
+      end
+    end
+    color_pegs
+  end
+
+  def give_hint_white(player_guess, computer_creation, filter_array_h)
+    white_peg = 0
+    player_guess.each_with_index do |v, i|
+      computer_creation.each_with_index do |x, y|
+        next unless v == x && i != y
+
+        break if both_qualified(player_guess, computer_creation, filter_array_h) == false
+
+        white_peg += 1
+        filter_array_h.push([i, y])
+      end
+    end
+    white_peg
+    # Temoporary
+    # self.occupied_places_h = [] maybe need to do something like this
+  end
+
+  def both_qualified(player_guess, computer_creation, filter_array_h)
+    player_guess.each_with_index do |v, i|
+      computer_creation.each_with_index do |x, y|
+        next unless v == x
+        break if filter_array_h.any? { |v1| v1[1] == y || v1[0] == i }
+
+        return true
+      end
+    end
+    false
+  end
+end

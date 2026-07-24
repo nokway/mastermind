@@ -1,22 +1,49 @@
+# frozen_string_literal: true
+
 require_relative 'codemaker_class'
 require_relative 'code_class'
 require_relative 'code_decoder_class'
 require_relative 'colors_class'
 require_relative 'players_class'
+require_relative 'helpers/compare_guess_module'
+require_relative 'computer_player'
+require_relative 'human_player'
 
+# In charge of handling all game events.
 class GameManager
+  include CompareGuess
+
   attr_accessor :code_maker, :code, :code_decoder, :maker, :colors, :code_manager, :players_handler, :colors_manager
 
   def initialize
-    @players_handler = PlayersClass.new
-    @code_maker = CodeMaker.new(players_handler.code_maker)
+    @players = [ComputerPlayer.new, HumanPlayer.new]
+    @code_maker = CodeMaker.new('none', self)
+    @code_decoder = CodeDecoder.new('none')
     @colors_manager = Colors.new
-    @code_manager = CodeManager.new(code_maker.make_code(colors_manager.colors))
+    @code_manager = CodeManager.new('')
   end
 
-  # def compare_guess_code
-  #   #
-  # end
-end
+  def choose_player
+    puts 'Do you (Human) want to be the maker or the guesser?'
+    if gets.chomp == 'maker'
+      %w[player computer]
+    else
+      %w[computer player]
+    end
+  end
 
-p GameManager.new.colors_manager
+  def choose_players
+    result = choose_player
+    code_maker.name = result[0]
+    code_decoder.name = result[1]
+  end
+
+  def play
+    binding.pry
+    choose_players
+    code_maker.make_code
+    p 'code', code_manager.code
+  end
+
+  # yessss this is howww we are going to do ittttt
+end

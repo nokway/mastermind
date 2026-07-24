@@ -12,7 +12,7 @@ module CompareGuess
   end
 
   def compare_guess_code_lose(guess, code, amount)
-    return unless guess != code && amount >= 12
+    return unless guess != code && amount > 12
 
     p 'You lose!'
   end

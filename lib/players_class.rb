@@ -6,16 +6,14 @@ class PlayersClass
 
   def initialize
     @answer = choose_player
-    @code_maker = CodeMaker.new(answer[0])
-    @code_breaker = CodeDecoder.new(answer[1])
   end
 
-  def choose_player
-    puts 'Do you (Human) want to be the maker or the guesser?'
-    if gets.chomp == 'maker'
-      %w[player computer]
-    else
-      %w[computer player]
-    end
-  end
+  # def choose_player
+  #   puts 'Do you (Human) want to be the maker or the guesser?'
+  #   if gets.chomp == 'maker'
+  #     %w[player computer]
+  #   else
+  #     %w[computer player]
+  #   end
+  # end
 end

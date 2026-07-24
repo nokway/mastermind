@@ -4,8 +4,12 @@ require_relative 'player'
 
 require 'pry-byebug'
 
-class HumanPlayer < PlayerClass
-  def guess
+class HumanPlayer
+  def initialize
+    @name = 'human'
+  end
+
+  def self.guess
     loop do
       puts 'What is your first guess? Hint: The code is 4 colors long'
       answer = gets.chomp.split(' ')

@@ -2,17 +2,16 @@
 
 require_relative 'player'
 require 'pry-byebug'
+require_relative 'helpers/computer_algorithm_guess'
 
 # The computerPLayer class, handles all things done by the computer player
-class ComputerPlayer < PlayerClass
-  def initialize(game, marker)
-    super
+class ComputerPlayer
+  include ComputerAlgorithm
+  def initialize
+    @name = 'computer'
     @colored_peg = 0
     @white_peg = 0
     @algorithm_array = %w[nil nil nil nil]
-    @occupied_places_f = []
-    @occupied_places_h = []
-    @colors = %w[red blue white yellow green pink black orange brown]
     @filter_array = []
   end
   attr_accessor :algorithm_array, :occupied_places_f, :colored_peg, :white_peg, :occupied_places_h, :colors,
@@ -141,19 +140,6 @@ class ComputerPlayer < PlayerClass
     end
   end
 
-  def give_hint_exact(colors_guessed_array, secret_code_array)
-    # Do
-    colors_guessed_array.each_with_index do |v, i|
-      secret_code_array.each_with_index do |x, y|
-        next unless v == x && i == y && occupied_places_h.include?(y) == false
-
-        self.colored_peg += 1
-        occupied_places_h.push(y)
-        break
-      end
-    end
-  end
-
   def give_hint_white(colors_guessed_array, secret_code_array)
     colors_guessed_array.each_with_index do |v, i|
       secret_code_array.each_with_index do |x, y|
@@ -168,7 +154,7 @@ class ComputerPlayer < PlayerClass
     self.occupied_places_h = []
   end
 
-  def random_guess(generated_colors)
+  def self.random_guess(generated_colors)
     new_arr = []
     copy = generated_colors
     4.times do |i|
@@ -180,9 +166,9 @@ class ComputerPlayer < PlayerClass
   end
 
   def perform_filter(player_creation, computer_guess)
-    exact_values(computer_guess, player_creation)
-    dif_index(computer_guess, player_creation)
-    none_index(computer_guess, player_creation)
+    exact_values(computer_guess, player_creation, filter_array, algorithm_array)
+    dif_index(computer_guess, player_creation, filter_array, algorithm_array)
+    none_index(computer_guess, player_creation, filter_array, algorithm_array)
 
     algorithm_array
   end
@@ -199,46 +185,6 @@ class ComputerPlayer < PlayerClass
     to_zero
   end
 
-  def exact_values(computer_guess, player_creation)
-    computer_guess.each_with_index do |v, i|
-      player_creation.each_with_index do |x, y|
-        next unless v == x && i == y
-
-        break if filter_array.any? { |v| v[0] == i || v[1] == y }
-
-        algorithm_array[i] = 1
-        filter_array.push([i, y])
-      end
-    end
-  end
-
-  def dif_index(computer_guess, player_creation)
-    computer_guess.each_with_index do |v, i|
-      player_creation.each_with_index do |x, y|
-        next unless v == x && i != y
-
-        break if filter_array.any? { |v| v[0] == i || v[1] == y }
-
-        algorithm_array[i] = 2
-        filter_array.push([i, y])
-      end
-    end
-  end
-
-  def none_index(computer_guess, player_creation)
-    computer_guess.each_with_index do |v, i|
-      player_creation.each_with_index do |x, y|
-        next unless v != x
-
-        next if filter_array.any? { |v| v[0] == i || v[1] == y }
-
-        algorithm_array[i] = 3
-
-        filter_array.push([i, y])
-      end
-    end
-  end
-
   def display_colors
     puts 'red blue white yellow green pink black orange brown'
   end
@@ -247,16 +193,16 @@ end
 
 # Make the shuffler for algorithm
 # Check optimizations required
-newGame = ComputerPlayer.new('e', 'e')
+# newGame = ComputerPlayer.new('e', 'e')
 
-c_guess = %w[blue red yellow red]
-real_t = %w[blue red green yellow]
-index_of_ones = [0, 1]
+# c_guess = %w[blue red yellow red]
+# real_t = %w[blue red green yellow]
+# index_of_ones = [0, 1]
 
-algorithm_array = newGame.perform_filter(real_t, c_guess)
-hash = newGame.change_2_and_three(algorithm_array, index_of_ones)
-new_pos = newGame.newpositions23(hash, c_guess)
-p new_pos
+# algorithm_array = newGame.perform_filter(real_t, c_guess)
+# hash = newGame.change_2_and_three(algorithm_array, index_of_ones)
+# new_pos = newGame.newpositions23(hash, c_guess)
+# p new_pos
 # testExact1 = newGame.exact_values(c_guess, real_t)
 
 # testExact = newGame.dif_index(c_guess, real_t)
