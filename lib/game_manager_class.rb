@@ -13,7 +13,8 @@ require_relative 'human_player'
 class GameManager
   include CompareGuess
 
-  attr_accessor :code_maker, :code, :code_decoder, :maker, :colors, :code_manager, :players_handler, :colors_manager
+  attr_accessor :code_maker, :code, :code_decoder, :maker, :colors, :code_manager, :players_handler, :colors_manager,
+                :amount
 
   def initialize
     @players = [ComputerPlayer.new, HumanPlayer.new]
@@ -21,6 +22,7 @@ class GameManager
     @code_decoder = CodeDecoder.new('none')
     @colors_manager = Colors.new
     @code_manager = CodeManager.new('')
+    @amount = 1
   end
 
   def choose_player
@@ -39,10 +41,19 @@ class GameManager
   end
 
   def play
-    binding.pry
     choose_players
     code_maker.make_code
-    p 'code', code_manager.code
+    loop do
+      guess = code_decoder.guessm(amount, colors_manager.colors, code_manager.code)
+      if compare_guess_code_win(guess, code_manager.code)
+        p 'You win!'
+      elsif compare_guess_code_again(guess, code_manager.code)
+        amount += 1
+        code_decoder.retry or smth # SHould implenent, should be like the algorithm array for computer decoder and just another guess for player decoder
+      elsif compare_guess_code_lose
+        # Implement this, also remember to omit the p statement in the module and instead put it here like above
+      end
+    end
   end
 
   # yessss this is howww we are going to do ittttt

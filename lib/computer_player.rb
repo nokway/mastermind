@@ -32,13 +32,6 @@ class ComputerPlayer
     array.count { |item| item == 3 }
   end
 
-  def index_of_ones(algorithm_array)
-    new_array = []
-    algorithm_array.each_with_index do |v, i|
-      new_array.push(i) if v == 1
-    end
-  end
-
   def check_conditions_two(array)
     array.count { |item| item != 1 && item < 4 }
   end
@@ -59,76 +52,6 @@ class ComputerPlayer
   def randomize(algorithm_array)
     sample(algorithm_array)
   end
-
-  def newpositions23(hash, comp_guess)
-    new_array = []
-    hash.each_pair do |key, value|
-      index = key[1]
-      value_c = comp_guess[index]
-
-      new_array[value] = value_c
-    end
-    new_array
-  end
-
-  def change_2_and_three(algorithm_array, index_of_ones)
-    # This shows the new positions for 2 and 3
-    storage_position = 0
-    occupied_positions = []
-    storageHash = {}
-    #    newposition = ''
-    algorithm_array.each_with_index do |v, i|
-      new_position = 0
-      next unless [2, 3].include?(v)
-
-      loop do
-        new_position = [0, 1, 2, 3].sample
-        if occupied_positions.include?(new_position) == false && index_of_ones.include?(new_position) == false && new_position != i
-          break
-        end
-
-        next
-      end
-
-      storage_position = new_position
-      occupied_positions.push(storage_position)
-
-      storageHash[[v, i]] = storage_position
-
-      storage_position = 0
-    end
-    storageHash
-  end
-  # Do this
-
-  def change_three(computer_guess, algorithm_array)
-    # Changes all the threes
-    occupied_colors = []
-    storage_hash = {}
-    new_color = ''
-    algorithm_array.each_with_index do |v, i|
-      next unless v == 3
-
-      p 'looks at 3'
-
-      original_color = computer_guess[i]
-      loop do
-        new_color = colors.sample
-        break if new_color != original_color && occupied_colors.include?(new_color) == false
-
-        new_color = 0
-      end
-
-      occupied_colors.push(new_color)
-      storage_hash["#{original_color}#{i}"] = "[#{new_color}][#{i}]"
-    end
-    storage_hash
-  end
-
-  #  def interpret_three(hash)
-  #    first_value = hash[0]
-  #    p first_value
-  #  end
 
   def do_condition(filter_three, filter_two, algorithm_array)
     loop do
@@ -162,7 +85,6 @@ class ComputerPlayer
       new_arr.push(copy[i])
       # Numbers based sytem where 1 is for similar values and 2 and 3 is for something else? Maybe perform a double filter with 2 methods this one, and then another one for same vaue but different index.
     end
-    new_arr
   end
 
   def perform_filter(player_creation, computer_guess)

@@ -1,8 +1,6 @@
 module CompareGuess
   def compare_guess_code_win(guess, code)
-    return unless guess == code
-
-    p 'You win!'
+    nil unless guess == code
   end
 
   def compare_guess_code_again(guess, code, amount)
