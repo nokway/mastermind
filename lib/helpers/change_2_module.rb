@@ -54,3 +54,11 @@ module ChangeThree
     new_positions = newpositions23(hash)
   end
 end
+
+# How to call
+# We need the guess, algorithm array etc.
+# Then we just say guess = this value or whatever, (but after applying the change all 3 thingy )and then we simply produce a new array, maybe change the value of the cimputer guess to this array
+# and send it over to the main game which is going to check if it was correct or not and then if its computer we just do the methods again
+# so probably easier to make a method in game-manager  for doing this entire process or somwhere else idk  maybe in code decoder
+# Questions:
+# should c ode maker the be the one to check if it was correct or game?
