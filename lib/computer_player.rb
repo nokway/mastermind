@@ -3,10 +3,14 @@
 require_relative 'player'
 require 'pry-byebug'
 require_relative 'helpers/computer_algorithm_guess'
+require_relative 'helpers/change_3_module'
+require_relative 'helpers/change_2_module'
 
 # The computerPLayer class, handles all things done by the computer player
 class ComputerPlayer
   include ComputerAlgorithm
+  include ChangeThree
+  include ChangeTwo
   def initialize
     @name = 'computer'
     @colored_peg = 0
@@ -85,6 +89,7 @@ class ComputerPlayer
       new_arr.push(copy[i])
       # Numbers based sytem where 1 is for similar values and 2 and 3 is for something else? Maybe perform a double filter with 2 methods this one, and then another one for same vaue but different index.
     end
+    new_arr
   end
 
   def perform_filter(player_creation, computer_guess)
@@ -93,6 +98,36 @@ class ComputerPlayer
     none_index(computer_guess, player_creation, filter_array, algorithm_array)
 
     algorithm_array
+  end
+
+  def apply_new_threes(threes, guess)
+    new_guess = guess
+    guess.each_with_index do |v, i|
+      threes.each_with_index do |x, y|
+        new_guess[i] = x if i == y
+      end
+    end
+    new_guess
+  end
+
+  def add_new_ones(guess, new_guess, algorithm)
+    copy = new_guess
+    ones = index_of_ones(algorithm)
+    copy.each_with_index do |v, i|
+      copy[i] = guess[i] if ones.include?(i)
+    end
+    copy
+  end
+
+  def apply_on_algo(algorithm_array, computer_guess, colors)
+    new_threes = perform_filters(computer_guess, algorithm_array, colors)
+    new_guess = apply_new_threes(new_threes, computer_guess)
+    new_ones = add_new_ones(computer_guess, new_guess, algorithm_array)
+    new_algo = perform_filter(colors, new_ones)
+    p new_twos = producenew23(new_algo, new_ones)
+    # Also add module 2 for now we only have new threes to see what we havw to do to combine it into one array
+    # Add combine with new threes and new 2 arrays
+    # Add new ones which will eventually add the missing oens from original guess to new guess
   end
 
   def to_zero

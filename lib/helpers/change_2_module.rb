@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Handles the change 2 and 3 switcher of values for the computer player
-module ChangeThree
+module ChangeTwo
   def change_2_and_three(algorithm_array, index_of_ones)
     # This shows the new positions for 2 and 3
     storage_position = 0
@@ -13,9 +13,9 @@ module ChangeThree
       storage_position = generate_new_position(occupied_positions, index_of_ones, i)
       occupied_positions.push(storage_position)
 
-      storageHash[[v, i]] = storage_position
+      storage_hash[[v, i]] = storage_position
     end
-    storageHash
+    storage_hash
   end
 
   def generate_new_position(occupied_positions, index_of_ones, current_position)
@@ -50,8 +50,8 @@ module ChangeThree
 
   def producenew23(algorithm_array, comp_guess)
     ones = index_of_ones(algorithm_array)
-    hash = change_2_and_three(algorithm_array, index_of_ones)
-    new_positions = newpositions23(hash)
+    hash = change_2_and_three(algorithm_array, ones)
+    newpositions23(hash, comp_guess)
   end
 end
 

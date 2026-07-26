@@ -41,17 +41,23 @@ class GameManager
   end
 
   def play
+    binding.pry
     choose_players
     code_maker.make_code
     loop do
       guess = code_decoder.guessm(amount, colors_manager.colors, code_manager.code)
       if compare_guess_code_win(guess, code_manager.code)
         p 'You win!'
-      elsif compare_guess_code_again(guess, code_manager.code)
-        amount += 1
-        code_decoder.retry or smth # SHould implenent, should be like the algorithm array for computer decoder and just another guess for player decoder
-      elsif compare_guess_code_lose
-        # Implement this, also remember to omit the p statement in the module and instead put it here like above
+        break
+      elsif compare_guess_code_again(guess, code_manager.code, amount)
+        self.amount += 1
+        p 'Incorrect, guess again'
+        p code_decoder.retry(amount, colors_manager.colors, code_manager.code) # SHould implenent, should be like the algorithm array for computer decoder and just another guess for player decoder
+
+      elsif compare_guess_code_lose(guess, code_manager.code, amount)
+        p 'Game maker won invalid amount of guessed'
+        p "The code was: #{code_manager.code}"
+        break
       end
     end
   end
