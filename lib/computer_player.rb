@@ -120,14 +120,13 @@ class ComputerPlayer
   end
 
   def apply_on_algo(algorithm_array, computer_guess, colors)
+    binding.pry
     new_threes = perform_filters(computer_guess, algorithm_array, colors)
     new_guess = apply_new_threes(new_threes, computer_guess)
     new_ones = add_new_ones(computer_guess, new_guess, algorithm_array)
     new_algo = perform_filter(colors, new_ones)
     p new_twos = producenew23(new_algo, new_ones)
-    # Also add module 2 for now we only have new threes to see what we havw to do to combine it into one array
-    # Add combine with new threes and new 2 arrays
-    # Add new ones which will eventually add the missing oens from original guess to new guess
+    # FIX THISSSS AHHHHHHHHHHH
   end
 
   def to_zero
