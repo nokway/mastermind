@@ -7,6 +7,7 @@ module ChangeThree
     algorithm_array.each_with_index do |v, i|
       next unless v == 3
 
+      occupied_colors.push(v)
       original_color = computer_guess[i]
       new_color = new_colors(colors, original_color, occupied_colors)
 
@@ -23,18 +24,18 @@ module ChangeThree
     end
   end
 
-  def new_threes(hash)
-    new_array = []
-    hash.each_pair do |v, i|
-      index = v[1]
+  # def new_threes(hash)
+  #   new_array = []
+  #   hash.each_pair do |v, i|
+  #     index = v[1]
 
-      new_array[index] = i
-    end
-    new_array
-  end
+  #     new_array[index] = i
+  #   end
+  #   new_array
+  # end
 
-  def perform_filters(computer_guess, algo_array, colors)
-    hash = change_three(computer_guess, algo_array, colors)
-    new_threes(hash)
-  end
+  # def perform_filters(computer_guess, algo_array, colors)
+  #   hash = change_three(computer_guess, algo_array, colors)
+  #   new_threes(hash)
+  # end
 end

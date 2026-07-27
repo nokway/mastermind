@@ -41,7 +41,6 @@ class GameManager
   end
 
   def play
-    binding.pry
     choose_players
     code_maker.make_code
     loop do
