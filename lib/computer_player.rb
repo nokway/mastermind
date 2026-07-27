@@ -37,7 +37,7 @@ class ComputerPlayer
   end
 
   def check_conditions_two(array)
-    array.count { |item| item != 1 && item < 4 }
+    array.count { |item| item == 2 }
   end
 
   def free_position(array)
@@ -57,13 +57,14 @@ class ComputerPlayer
     sample(algorithm_array)
   end
 
-  def do_condition(filter_three, filter_two, algorithm_array)
-    loop do
-      if check_conditions_three(algorithm_array).positive?
-        # Invoke filter three
-      elsif check_conditions_two(algorithm_array) >= 2
-        # Invoke filter 2
-      end
+  def do_condition(algorithm_array, computer_guess, colors)
+    if check_conditions_three(algorithm_array).positive?
+      new_threes_hash = change_three(computer_guess, algorithm_array, colors)
+      apply_new_threes(new_threes_hash, computer_guess)
+
+    elsif check_conditions_two(algorithm_array) > 1
+      new_twos_hash = change_two(algorithm_array)
+      apply_new_twos
     end
   end
 
@@ -109,8 +110,12 @@ class ComputerPlayer
     new_guess
   end
 
-  def apply_new_twos(twos, guess)
-    p 'e'
+  def apply_new_twos(twos, new_guess, computer_guess)
+    new_guess_twos = new_guess.clone
+    twos.each_pair do |x, y|
+      value = computer_guess[x[1]]
+      new_guess_twos[y] = value
+    end
   end
 
   def apply_on_algo(algorithm_array, computer_guess, colors, code)
@@ -118,6 +123,7 @@ class ComputerPlayer
     new_threes_hash = change_three(computer_guess, algorithm_array, colors)
     new_guess = apply_new_threes(new_threes_hash, computer_guess)
     new_algorithm = perform_filter(code, new_guess)
+    p new_algorithm
 
     # p new_twos_positions = producenew23(new_algo, added_twos)
     # FIX THISSSS AHHHHHHHHHHH
