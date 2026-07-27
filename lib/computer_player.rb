@@ -100,14 +100,22 @@ class ComputerPlayer
     algorithm_array
   end
 
+  def apply_new_threes(threes, guess)
+    new_guess = guess
+    guess.each_with_index do |v, i|
+      threes.each_with_index do |x, y|
+        new_guess[i] = x if i == y
+      end
+    end
+    new_guess
+  end
+
   def apply_on_algo(algorithm_array, computer_guess, colors, code)
     binding.pry
     new_threes_hash = change_three(computer_guess, algorithm_array, colors)
     new_guess = apply_new_threes(new_threes_hash, computer_guess)
-    p new_guess
-    # new_ones = add_new_ones(computer_guess, new_guess, algorithm_array)
-    # added_twos = add_back_twos(computer_guess, new_ones, algorithm_array)
-    # new_algo = perform_filter(code, added_twos)
+    new_algorithm = perform_filter(code, new_guess)
+
     # p new_twos_positions = producenew23(new_algo, added_twos)
     # FIX THISSSS AHHHHHHHHHHH
   end
