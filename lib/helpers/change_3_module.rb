@@ -4,6 +4,7 @@ module ChangeThree
     occupied_colors = []
     storage_hash = {}
     new_color = ''
+
     algorithm_array.each_with_index do |v, i|
       next unless v == 3
 
@@ -11,7 +12,6 @@ module ChangeThree
       original_color = computer_guess[i]
       new_color = new_colors(colors, original_color, occupied_colors)
 
-      occupied_colors.push(new_color)
       storage_hash[[original_color, i]] = new_color
     end
     storage_hash
@@ -23,6 +23,12 @@ module ChangeThree
       return new_color if new_color != original_color && occupied_colors.include?(new_color) == false
     end
   end
+
+  # def to_occupied_colors(algorithm_array)
+  #   algorithm_array.each_with_index do |v, i|
+
+  #   end
+  # end
 
   # def new_threes(hash)
   #   new_array = []

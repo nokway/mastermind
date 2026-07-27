@@ -101,13 +101,16 @@ class ComputerPlayer
   end
 
   def apply_new_threes(threes, guess)
-    new_guess = guess
-    guess.each_with_index do |v, i|
-      threes.each_with_index do |x, y|
-        new_guess[i] = x if i == y
-      end
+    new_guess = guess.clone
+    threes.each_pair do |x, y|
+      new_guess[x[1]] = y
     end
+
     new_guess
+  end
+
+  def apply_new_twos(twos, guess)
+    p 'e'
   end
 
   def apply_on_algo(algorithm_array, computer_guess, colors, code)
