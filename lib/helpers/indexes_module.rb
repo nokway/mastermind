@@ -1,8 +1,18 @@
 module Indexes
   def index_of_ones(computer_guess, algorithm_array)
+    new_array = []
+    algorithm_array.each_with_index do |v, i|
+      new_array.push(i) if v == 1
+    end
+    new_array
   end
 
   def index_of_threes(computer_guess, algorithm_array)
+    new_array = []
+
+    algorithm_array.each_with_index do |v, i|
+      new_array.push(i) if v == 3
+    end
   end
 end
 
