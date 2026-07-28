@@ -14,7 +14,7 @@ class GameManager
   include CompareGuess
 
   attr_accessor :code_maker, :code, :code_decoder, :maker, :colors, :code_manager, :players_handler, :colors_manager,
-                :amount
+                :amount, :amount_player
 
   def initialize
     @players = [ComputerPlayer.new, HumanPlayer.new]
@@ -45,7 +45,6 @@ class GameManager
     code_maker.make_code
 
     loop do
-      binding.pry
       guess = code_decoder.guessm(amount, colors_manager.colors, code_manager.code)
       if compare_guess_code_win(guess, code_manager.code)
         p 'You win!'

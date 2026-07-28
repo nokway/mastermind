@@ -4,6 +4,7 @@
 require_relative 'code_decoder_class'
 require_relative 'codemaker_class'
 require_relative 'helpers/computer_algorithm_guess'
+require_relative 'helpers/give_hint_module'
 
 # Code Decoder class handling the decoder instance of player
 class CodeDecoder
@@ -15,8 +16,11 @@ class CodeDecoder
     @guess = ''
   end
 
-  def guess_code_player
+  def guess_code_player(code)
+    binding.pry
+    p "Testing, Code is: #{code}"
     self.guess = HumanPlayer.guess
+    ComputerPlayer.new.give_colors(guess, code)
   end
 
   def guess_code_computer(amount, colors, code)
@@ -34,7 +38,7 @@ class CodeDecoder
 
   def guessm(amount, colors, code)
     if name == 'player'
-      guess_code_player
+      guess_code_player(code)
     elsif name == 'computer'
       guess_code_computer(amount, colors, code)
     end
@@ -42,7 +46,7 @@ class CodeDecoder
 
   def retry(amount, colors, code)
     if name == 'player'
-      guess_code_player
+      guess_code_player(code)
     elsif name == 'computer'
       guess_code_computer(amount, colors, code)
     end

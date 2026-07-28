@@ -2,7 +2,7 @@
 
 # Module helper for handling the give hints
 module GiveHint
-  def exact_values(player_guess, computer_creation, filter_array_h)
+  def exact_values_hint(player_guess, computer_creation, filter_array_h)
     color_pegs = 0
     player_guess.each_with_index do |v, i|
       computer_creation.each_with_index do |x, y|
@@ -29,9 +29,10 @@ module GiveHint
         filter_array_h.push([i, y])
       end
     end
-    white_peg
+
     # Temoporary
-    # self.occupied_places_h = [] maybe need to do something like this
+    self.occupied_places_h = []
+    white_peg
   end
 
   def both_qualified(player_guess, computer_creation, filter_array_h)

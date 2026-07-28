@@ -6,6 +6,7 @@ require_relative 'helpers/computer_algorithm_guess'
 require_relative 'helpers/change_3_module'
 require_relative 'helpers/change_2_module'
 require_relative 'helpers/indexes_module'
+require_relative 'helpers/give_hint_module'
 
 # The computerPLayer class, handles all things done by the computer player
 class ComputerPlayer
@@ -13,15 +14,17 @@ class ComputerPlayer
   include ChangeThree
   include ChangeTwo
   include Indexes
+  include GiveHint
   def initialize
     @name = 'computer'
     @colored_peg = 0
     @white_peg = 0
     @algorithm_array = %w[nil nil nil nil]
     @filter_array = []
+    @filter_array_hints = []
   end
   attr_accessor :algorithm_array, :occupied_places_f, :colored_peg, :white_peg, :occupied_places_h, :colors,
-                :filter_array
+                :filter_array, :filter_array_hints
 
   def randomizecolors
     new_array = []
@@ -59,27 +62,19 @@ class ComputerPlayer
     sample(algorithm_array)
   end
 
-  def do_condition(algorithm_array, computer_guess, colors, new_guess)
-    if check_conditions_three(algorithm_array).positive?
+  # def give_hint_white(colors_guessed_array, secret_code_array)
+  #   colors_guessed_array.each_with_index do |v, i|
+  #     secret_code_array.each_with_index do |x, y|
+  #       next unless v == x && i != y && occupied_places_h.include?(i) == false && occupied_places_h.include?(y) == false
 
-    elsif check_conditions_two(algorithm_array) > 1
+  #       self.white_peg += 1
+  #       occupied_places_h.push(y)
+  #     end
+  #   end
 
-    end
-  end
-
-  def give_hint_white(colors_guessed_array, secret_code_array)
-    colors_guessed_array.each_with_index do |v, i|
-      secret_code_array.each_with_index do |x, y|
-        next unless v == x && i != y && occupied_places_h.include?(i) == false && occupied_places_h.include?(y) == false
-
-        self.white_peg += 1
-        occupied_places_h.push(y)
-      end
-    end
-
-    # Temoporary
-    self.occupied_places_h = []
-  end
+  #   # Temoporary
+  #   self.occupied_places_h = []
+  # end
 
   def self.random_guess(generated_colors)
     new_arr = []
@@ -137,16 +132,12 @@ class ComputerPlayer
     false
   end
 
-  def to_zero
-    self.colored_peg = 0
-    self.white_peg = 0
-  end
-
   def give_colors(player_guess, computer_gen)
-    give_hint_exact(player_guess, computer_gen)
-    give_hint_white(player_guess, computer_gen)
+    self.colored_peg = exact_values_hint(player_guess, computer_gen, filter_array_hints)
+    self.white_peg = give_hint_white(player_guess, computer_gen, filter_array_hints)
     puts "Colored pegs: #{colored_peg}, White pegs: #{white_peg}"
-    to_zero
+
+    # Maybe do a to zero for the filter h too??
   end
 
   def display_colors
