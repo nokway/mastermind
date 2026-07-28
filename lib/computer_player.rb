@@ -5,12 +5,14 @@ require 'pry-byebug'
 require_relative 'helpers/computer_algorithm_guess'
 require_relative 'helpers/change_3_module'
 require_relative 'helpers/change_2_module'
+require_relative 'helpers/indexes_module'
 
 # The computerPLayer class, handles all things done by the computer player
 class ComputerPlayer
   include ComputerAlgorithm
   include ChangeThree
   include ChangeTwo
+  include Indexes
   def initialize
     @name = 'computer'
     @colored_peg = 0
@@ -57,14 +59,11 @@ class ComputerPlayer
     sample(algorithm_array)
   end
 
-  def do_condition(algorithm_array, computer_guess, colors)
+  def do_condition(algorithm_array, computer_guess, colors, new_guess)
     if check_conditions_three(algorithm_array).positive?
-      new_threes_hash = change_three(computer_guess, algorithm_array, colors)
-      apply_new_threes(new_threes_hash, computer_guess)
 
     elsif check_conditions_two(algorithm_array) > 1
-      new_twos_hash = change_two(algorithm_array)
-      apply_new_twos
+
     end
   end
 
@@ -116,17 +115,26 @@ class ComputerPlayer
       value = computer_guess[x[1]]
       new_guess_twos[y] = value
     end
+    new_guess_twos
   end
 
   def apply_on_algo(algorithm_array, computer_guess, colors, code)
-    binding.pry
     new_threes_hash = change_three(computer_guess, algorithm_array, colors)
     new_guess = apply_new_threes(new_threes_hash, computer_guess)
     new_algorithm = perform_filter(code, new_guess)
-    p new_algorithm
+    new_twos_hash = change_two(new_algorithm, index_of_ones(new_algorithm),
+                               index_of_threes(new_algorithm))
+    if handle_false(new_twos_hash)
+      apply_new_twos(new_twos_hash, new_guess, computer_guess)
+    else
+      new_guess
+    end
+  end
 
-    # p new_twos_positions = producenew23(new_algo, added_twos)
-    # FIX THISSSS AHHHHHHHHHHH
+  def handle_false(new_twos_hash)
+    return true if new_twos_hash
+
+    false
   end
 
   def to_zero

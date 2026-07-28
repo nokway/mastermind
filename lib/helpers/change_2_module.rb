@@ -2,15 +2,16 @@
 
 # Handles the change 2 and 3 switcher of values for the computer player
 module ChangeTwo
-  def change_two(algorithm_array, index_of_ones, index_of_twos)
+  def change_two(algorithm_array, index_of_ones, index_of_threes)
     # This shows the new positions for 2 and 3
     storage_position = 0
     occupied_positions = []
     storage_hash = {}
     algorithm_array.each_with_index do |v, i|
       next unless [2].include?(v)
+      return false if loop_check(algorithm_array) == false
 
-      storage_position = generate_new_position(occupied_positions, index_of_ones, i, index_of_twos)
+      storage_position = generate_new_position(occupied_positions, index_of_ones, i, index_of_threes)
       occupied_positions.push(storage_position)
 
       storage_hash[[v, i]] = storage_position
@@ -18,15 +19,26 @@ module ChangeTwo
     storage_hash
   end
 
-  def generate_new_position(occupied_positions, index_of_ones, current_position, index_of_twos)
+  def generate_new_position(occupied_positions, index_of_ones, current_position, index_of_threes)
     loop do
       new_position = [0, 1, 2, 3].sample
-      if occupied_positions.include?(new_position) == false && index_of_ones.include?(new_position) == false && new_position != current_position && index_of_twos.include?(new_position) == false
+      if occupied_positions.include?(new_position) == false && index_of_ones.include?(new_position) == false && new_position != current_position && index_of_threes.include?(new_position) == false
         return new_position
       end
 
       next
     end
+  end
+
+  def loop_check(algorithm_array)
+    amount = 0
+    algorithm_array.each do |v|
+      checker = 2
+      amount += 1 if v == checker
+    end
+    return true if amount > 1
+
+    false
   end
 
   # def newpositions23(hash, comp_guess)

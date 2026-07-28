@@ -43,7 +43,9 @@ class GameManager
   def play
     choose_players
     code_maker.make_code
+
     loop do
+      binding.pry
       guess = code_decoder.guessm(amount, colors_manager.colors, code_manager.code)
       if compare_guess_code_win(guess, code_manager.code)
         p 'You win!'

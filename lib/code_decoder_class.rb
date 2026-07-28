@@ -25,8 +25,7 @@ class CodeDecoder
       self.guess = ComputerPlayer.random_guess(colors)
     elsif amount > 1
       algo = ComputerPlayer.new.perform_filter(code, guess)
-      thre_arr = ComputerPlayer.new.apply_on_algo(algo, guess, colors, code)
-
+      self.guess = ComputerPlayer.new.apply_on_algo(algo, guess, colors, code)
       # self.guess = three_arr
       # perform the computer filteralgorithm
     end
