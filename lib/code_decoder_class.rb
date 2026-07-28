@@ -17,10 +17,10 @@ class CodeDecoder
   end
 
   def guess_code_player(code)
-    binding.pry
     p "Testing, Code is: #{code}"
     self.guess = HumanPlayer.guess
-    ComputerPlayer.new.give_colors(guess, code)
+    p ComputerPlayer.new.give_colors(guess, code)
+    guess
   end
 
   def guess_code_computer(amount, colors, code)
@@ -30,8 +30,6 @@ class CodeDecoder
     elsif amount > 1
       algo = ComputerPlayer.new.perform_filter(code, guess)
       self.guess = ComputerPlayer.new.apply_on_algo(algo, guess, colors, code)
-      # self.guess = three_arr
-      # perform the computer filteralgorithm
     end
     # We are going to make it turn based. So I think we will do different actions depending on if its the first round or if its above the first round and we can start to use the algorithm.
   end
