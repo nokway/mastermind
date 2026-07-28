@@ -8,7 +8,7 @@ module GiveHint
       computer_creation.each_with_index do |x, y|
         next unless v == x && i == y
 
-        break if both_qualified_exact(player_guess, computer_creation, filter_array_h, i, y) == false
+        break if both_qualified_exact(filter_array_h, i, y) == false
 
         color_pegs += 1
         filter_array_h.push([i, y])
@@ -23,7 +23,7 @@ module GiveHint
       computer_creation.each_with_index do |x, y|
         next unless v == x && i != y
 
-        break if both_qualified_exact(player_guess, computer_creation, filter_array_h, i, y) == false
+        break if both_qualified_exact(filter_array_h, i, y) == false
 
         white_peg += 1
         filter_array_h.push([i, y])
@@ -35,7 +35,7 @@ module GiveHint
     white_peg
   end
 
-  def both_qualified_exact(player_guess, computer_creation, filter_array_h, i_val, y_val)
+  def both_qualified_exact(filter_array_h, i_val, y_val)
     return false if filter_array_h.any? { |v1| v1[1] == y_val || v1[0] == i_val }
 
     true

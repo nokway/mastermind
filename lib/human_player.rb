@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'player'
-
 require 'pry-byebug'
 
+# Human Player manager class
 class HumanPlayer
   def initialize
     @name = 'human'
@@ -20,7 +19,6 @@ class HumanPlayer
   end
 
   def self.create_colors
-    colors = %w[red blue white yellow green pink black orange brown]
     puts 'Create a color code of 4 colors, they may repeat, format is "color color color color"'
     gets.downcase.split(' ')
   end

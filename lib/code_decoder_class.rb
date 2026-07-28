@@ -17,15 +17,15 @@ class CodeDecoder
   end
 
   def guess_code_player(code)
-    p "Testing, Code is: #{code}"
+    # p "Testing, Code is: #{code}"
     self.guess = HumanPlayer.guess
-    p ComputerPlayer.new.give_colors(guess, code)
+    puts ComputerPlayer.new.give_colors(guess, code)
     guess
   end
 
   def guess_code_computer(amount, colors, code)
     if amount == 1
-      p 'First so made a random guess'
+      puts 'First so made a random guess'
       self.guess = ComputerPlayer.random_guess(colors)
     elsif amount > 1
       algo = ComputerPlayer.new.perform_filter(code, guess)

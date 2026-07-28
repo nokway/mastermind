@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'player'
 require 'pry-byebug'
 require_relative 'helpers/computer_algorithm_guess'
 require_relative 'helpers/change_3_module'

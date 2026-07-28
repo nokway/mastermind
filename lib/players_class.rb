@@ -1,19 +1,11 @@
 require_relative 'codemaker_class'
 require_relative 'code_decoder_class'
 
+# The playersClass
 class PlayersClass
   attr_accessor :code_maker, :code_breaker, :answer, :answer_array, :select_player
 
   def initialize
     @answer = choose_player
   end
-
-  # def choose_player
-  #   puts 'Do you (Human) want to be the maker or the guesser?'
-  #   if gets.chomp == 'maker'
-  #     %w[player computer]
-  #   else
-  #     %w[computer player]
-  #   end
-  # end
 end
