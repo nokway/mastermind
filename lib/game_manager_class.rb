@@ -41,7 +41,6 @@ class GameManager
   end
 
   def play
-    binding.pry
     choose_players
     code_maker.make_code
 
@@ -54,7 +53,8 @@ class GameManager
       if compare_guess_code_again(guess, code_manager.code, amount)
         self.amount += 1
         p 'Incorrect, guess again'
-        p "Guess: #{amount}"
+        p "Guess: #{guess}"
+        p "Attempt: #{amount}"
         next
         # p code_decoder.retry(amount, colors_manager.colors, code_manager.code) # SHould implenent, should be like the algorithm array for computer decoder and just another guess for player decoder
       end

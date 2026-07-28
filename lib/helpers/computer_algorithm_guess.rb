@@ -7,7 +7,7 @@ module ComputerAlgorithm
       player_creation.each_with_index do |x, y|
         next unless v == x && i == y
 
-        break if both_qualified(computer_guess, player_creation, filter_array) == false
+        break if both_qualified(computer_guess, player_creation, filter_array, i, y) == false
 
         algorithm_array[i] = 1
         filter_array.push([i, y])
@@ -20,7 +20,7 @@ module ComputerAlgorithm
       player_creation.each_with_index do |x, y|
         next unless v == x && i != y
 
-        break if both_qualified(computer_guess, player_creation, filter_array) == false
+        break if both_qualified(computer_guess, player_creation, filter_array, i, y) == false
 
         algorithm_array[i] = 2
         filter_array.push([i, y])
@@ -42,15 +42,9 @@ module ComputerAlgorithm
     end
   end
 
-  def both_qualified(computer_guess, player_creation, filter_array)
-    computer_guess.each_with_index do |v, i|
-      player_creation.each_with_index do |x, y|
-        next unless v == x
-        break if filter_array.any? { |v1| v1[1] == y || v1[0] == i }
+  def both_qualified(computer_guess, player_creation, filter_array, i_val, y_val)
+    return false if filter_array.any? { |v1| v1[1] == y_val || v1[0] == i_val }
 
-        return true
-      end
-    end
-    false
+    true
   end
 end
